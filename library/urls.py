@@ -8,3 +8,4 @@ router.register(r'books', BookViewSet, basename='book')
 urlpatterns = [
     path('', include(router.urls)),
 ]
+
