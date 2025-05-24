@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'users',
     'rest_framework_simplejwt',
     'drf_yasg',
+    'corsheaders',
+    'rest_framework_simplejwt.token_blacklist',
 ]
 
 MIDDLEWARE = [
@@ -54,6 +56,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
 
 ROOT_URLCONF = 'config.urls'
@@ -137,8 +141,10 @@ REST_FRAMEWORK = {
 
 
 SIMPLE_JWT = {
-    'ACCESS_TOKEN_LIFETIME': timedelta(days=10), 
-    'REFRESH_TOKEN_LIFETIME': timedelta(days=11), 
+    'ACCESS_TOKEN_LIFETIME': timedelta(days=10),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=11),
+    'AUTH_TOKEN_CLASSES': ('rest_framework_simplejwt.tokens.AccessToken',),
+    'BLACKLIST_AFTER_ROTATION': True,
 }
 
 SPECTACULAR_SETTINGS = {
@@ -172,5 +178,9 @@ SWAGGER_SETTINGS = {
             'description': 'Формат: Bearer <токен>'
         }
     },
-    'USE_SESSION_AUTH': False,  
+    'USE_SESSION_AUTH': False,
 }
+
+CORS_ALLOW_CREDENTIALS = True
+
+CORS_ALLOW_ALL_ORIGINS = True
